@@ -58,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
     private Button Test_knop;
 
     //----------------------------------------------------------------------------------------------------------------------------
-    // Handler methode
-    Handler hdler=new Handler(){
+// Handler methode
+    Handler hdler=new Handler(new Handler.Callback(){
         @Override
-        public void handleMessage(Message msg) {
-            Log.d(TAG, "bellen nu terug " + erIsOpgehangen);
+        public boolean handleMessage(Message msg) {
+            Log.d("testflow", "bellen nu terug " + erIsOpgehangen);
             {
 //                Intent callIntent = new Intent(Intent.ACTION_CALL);
 //                callIntent.setData(Uri.parse("tel:" + "0614927288"));
@@ -70,8 +70,9 @@ public class MainActivity extends AppCompatActivity {
             }
             // if (erIsOpgehangen > 0)
             hdler.removeCallbacks(r);
+            return false;
         }
-    };
+    });
 
     //-------------------------------- onCreate ------------------------------------
     @Override
