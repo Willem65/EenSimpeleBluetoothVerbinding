@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ScheduledExecutorService scheduleTaskExecutor;
     private static final int PERMISSION_REQUEST_READ_PHONE_STATE = 0;
     public DeviceListAdapter mDeviceListAdapter;
-    public static BluetoothConnectionService mBluetoothConnection;
+    public BluetoothConnectionService mBluetoothConnection;
 
     private String TAG = "testflow";
     private static final UUID MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println("In Main");
         messages = new StringBuilder();
-        incomingMessages = (TextView) findViewById(R.id.incomingMessage);
+        incomingMessages =  findViewById(R.id.incomingMessage);
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter("incomingMessage"));
 
         //------------ Enable Default adapter ------------------------------
@@ -103,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
 //        IntentFilter broadevt = new IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
 //        registerReceiver(mBroadcastReceiver6, broadevt);
 
-        btnSend = (Button) findViewById(R.id.btnSendxml);
-        btnEnableDisable_Discoverable = (Button) findViewById(R.id.btnDiscoverable_on_off);
+        btnSend =  findViewById(R.id.btnSendxml);
+        btnEnableDisable_Discoverable = findViewById(R.id.btnDiscoverable_on_off);
 
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
 //            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_DENIED || checkSelfPermission(Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_DENIED) {
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 if (erIsOpgehangen==1) {
 
                     hdler.sendEmptyMessage(0);
-                    //erIsOpgehangen=0;
+                    erIsOpgehangen=0;
                 }
                 try {
                     Thread.sleep(timeInterval);

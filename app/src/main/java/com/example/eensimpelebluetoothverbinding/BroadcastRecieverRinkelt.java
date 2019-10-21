@@ -7,9 +7,6 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import static com.example.eensimpelebluetoothverbinding.MainActivity.mBluetoothConnection;
-import static java.nio.charset.Charset.defaultCharset;
-
 //public class MyBroadcastReceiver extends BroadcastReceiver
 
 public class BroadcastRecieverRinkelt extends BroadcastReceiver {
@@ -23,7 +20,7 @@ public class BroadcastRecieverRinkelt extends BroadcastReceiver {
             Toast.makeText(context, "Call from: " + incomingNumber, Toast.LENGTH_LONG).show();
             Log.d(TAG, "bellen actief");
             // bytes="r".getBytes(defaultCharset());
-            mBluetoothConnection.write("r".getBytes(defaultCharset()));
+            //mBluetoothConnection.write("r".getBytes(defaultCharset()));
         } else if (intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(TelephonyManager.EXTRA_STATE_IDLE) || intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
             Toast.makeText(context, "Detectes call hangup event", Toast.LENGTH_LONG).show();
             erIsOpgehangen++;
