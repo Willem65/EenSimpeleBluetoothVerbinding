@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("testflow", "bellen nu terug " + erIsOpgehangen);
             {
 //                Intent callIntent = new Intent(Intent.ACTION_CALL);
-//                callIntent.setData(Uri.parse("tel:" + "0614927288"));
+//                callIntent.setData(Uri.parse("tel:" + "06149"));
 //                startActivity(callIntent);
             }
             // if (erIsOpgehangen > 0)
