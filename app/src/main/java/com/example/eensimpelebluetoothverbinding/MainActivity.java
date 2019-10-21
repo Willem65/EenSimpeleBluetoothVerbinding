@@ -32,26 +32,10 @@ import static java.nio.charset.Charset.defaultCharset;
 //--------------------------------MainActivity----------------------------------
 public class MainActivity extends AppCompatActivity {
 
-    Handler hdler=new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            Log.d(TAG, "bellen nu terug " + erIsOpgehangen);
-             {
-//                Intent callIntent = new Intent(Intent.ACTION_CALL);
-//                callIntent.setData(Uri.parse("tel:" + "0614927288"));
-//                startActivity(callIntent);
-            }
-           // if (erIsOpgehangen > 0)
-            hdler.removeCallbacks(r);
-        }
-    };
-
     private ScheduledExecutorService scheduleTaskExecutor;
-
     private static final int PERMISSION_REQUEST_READ_PHONE_STATE = 0;
     public DeviceListAdapter mDeviceListAdapter;
     public static BluetoothConnectionService mBluetoothConnection;
-
 
     private String TAG = "testflow";
     private static final UUID MY_UUID_INSECURE = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -73,6 +57,22 @@ public class MainActivity extends AppCompatActivity {
     final long timeInterval = 2000;
     private Button Test_knop;
 
+    //----------------------------------------------------------------------------------------------------------------------------
+    // Handler methode
+    Handler hdler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            Log.d(TAG, "bellen nu terug " + erIsOpgehangen);
+            {
+//                Intent callIntent = new Intent(Intent.ACTION_CALL);
+//                callIntent.setData(Uri.parse("tel:" + "0614927288"));
+//                startActivity(callIntent);
+            }
+            // if (erIsOpgehangen > 0)
+            hdler.removeCallbacks(r);
+        }
+    };
+
     //-------------------------------- onCreate ------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,12 +80,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         System.out.println("In Main");
-
-
         messages = new StringBuilder();
-
         incomingMessages = (TextView) findViewById(R.id.incomingMessage);
-
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter("incomingMessage"));
 
         //------------ Enable Default adapter ------------------------------
@@ -108,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
 //        registerReceiver(mBroadcastReceiver6, broadevt);
 
         btnSend = (Button) findViewById(R.id.btnSendxml);
-
-
         btnEnableDisable_Discoverable = (Button) findViewById(R.id.btnDiscoverable_on_off);
 
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
@@ -121,17 +115,15 @@ public class MainActivity extends AppCompatActivity {
 
         Thread wil = new Thread(r);
         wil.start();
-
-
     }
+//-------------------------------- end off onCreate ------------------------------------
 
+//----------------------------------------------------------------------------------------------------------------------------
 
+    // Runnable Thread runs in background
     Runnable r = new Runnable() {
         @Override
         public void run() {
-            // Intent callIntent = new Intent(Intent.ACTION_CALL);
-            // callIntent.setData(Uri.parse("tel:" + "0614927288"));
-            // startActivity(callIntent);
 
             while (true) {
                 Log.d(TAG, "Timer erIsOpgehangen " + erIsOpgehangen);
@@ -150,54 +142,25 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
-
-
-
-
 //----------------------------------------------------------------------------------------------------------------------------
-
-//-------------------- BroadcastRecieverRinkelt ---------------------
-//private BroadcastReceiver mBroadcastReceiver6 = new BroadcastReceiver() {
-//    @Override
-//    public void onReceive(Context context, Intent intent) {
-//
-//        if(intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(TelephonyManager.EXTRA_STATE_RINGING)){
-//
-//            String incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-//            //Toast.makeText(context,"Call from: " + incomingNumber,Toast.LENGTH_LONG).show();
-//            //Log.d(TAG, "willem1");
-//            // bytes="r".getBytes(defaultCharset());
-//            mBluetoothConnection.write("r".getBytes(defaultCharset()));
-//
-//        }
-//        else if(intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(TelephonyManager.EXTRA_STATE_IDLE) || intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(TelephonyManager.EXTRA_STATE_OFFHOOK)){
-//
-//            //Toast.makeText(context,"Detectes call hangup event",Toast.LENGTH_LONG).show();
-//            //Log.d(TAG, "willem2");
-//        }
-//
-//    }
-//};
-//----------------------------------------------------------------------------------------------------------------------------
-
+    //Button Onclick event
     public void btnSend(View view) {
         erIsOpgehangen++;
-
     }
 
-    public void Unpair(View view) {
 
+//----------------------------------------------------------------------------------------------------------------------------
+    //Button Onclick event
+    public void Unpair(View view) {
         bytes="r".getBytes(defaultCharset());
         mBluetoothConnection.write(bytes);
     }
+
+
 //----------------------------------------------------------------------------------------------------------------------------
 
-
+    //Button Onclick event
     public void btnEnableDisable_Discoverable(View view) {
-
-//        Log.d(TAG, "btnEnableDisable_Discoverable");
-//        bytes = "r".getBytes(defaultCharset());
-//        mBluetoothConnection.write(bytes);
 //        anwwerCall();
         bytes="r".getBytes(defaultCharset());
         mBluetoothConnection.write(bytes);
@@ -207,28 +170,7 @@ public class MainActivity extends AppCompatActivity {
 //----------------------------------------------------------------------------------------------------------------------------
 
 
-    public void anwwerCall()  {
-        //Runtime.getRuntime().exec("input keyevent"+Integer.toString(KeyEvent.KEYCODE_HEADSETHOOK));
-
-
-//        try {
-//            Runtime.getRuntime().exec("input keyevent"+Integer.toString(KeyEvent.KEYCODE_HEADSETHOOK));
-//        } catch (IOException e) {
-//            //handle error here
-//        }
-
-//        Intent i = new Intent(Intent.ACTION_MEDIA_BUTTON);
-//        KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_HEADSETHOOK);
-//        i.putExtra(Intent.EXTRA_KEY_EVENT, event );
-//        context.sendOrderedBroadcast(i, null);
-
-    }
-
-//----------------------------------------------------------------------------------------------------------------------------
-
-
     public void startConnection() {
-
         mBluetoothConnection.startClient(mBTDevice, MY_UUID_INSECURE);
     }
 
@@ -236,28 +178,17 @@ public class MainActivity extends AppCompatActivity {
 
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onReceive(Context context, Intent intent) {
-
             String text = intent.getStringExtra("theMessage");
             messages.append(text);
             incomingMessages.setText(messages);
-
             String str = messages.toString();
-
             teller++;
-
             Log.d(TAG, Integer.toString(teller));
-
-
-
         }
     };
-
-
-
 
 
 //-------------------- BroadcastReciever zoekt naar devices die nog niet gepaired zijn ---------------------
@@ -289,12 +220,16 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
 //----------------------------------------------------------------------------------------------------------------------------
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mBroadcastReceiver3);
+        //unregisterReceiver(BroadcastRecieverRinkelt);
+    }
 
-
-
+//----------------------------------------------------------------------------------------------------------------------------
 
 
     /**
@@ -317,16 +252,49 @@ public class MainActivity extends AppCompatActivity {
 //            Log.d(TAG, "checkBTPermissions: No need to check permissions. SDK version < LOLLIPOP.");
 //        }
     }
+
+
 //----------------------------------------------------------------------------------------------------------------------------
 
+    //Testing
+    public void anwwerCall()  {
+        //Runtime.getRuntime().exec("input keyevent"+Integer.toString(KeyEvent.KEYCODE_HEADSETHOOK));
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(mBroadcastReceiver3);
-        //unregisterReceiver(BroadcastRecieverRinkelt);
+//        try {
+//            Runtime.getRuntime().exec("input keyevent"+Integer.toString(KeyEvent.KEYCODE_HEADSETHOOK));
+//        } catch (IOException e) {
+//            //handle error here
+//        }
+
+//        Intent i = new Intent(Intent.ACTION_MEDIA_BUTTON);
+//        KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_HEADSETHOOK);
+//        i.putExtra(Intent.EXTRA_KEY_EVENT, event );
+//        context.sendOrderedBroadcast(i, null);
+
     }
 
+//-------------------- BroadcastRecieverRinkelt ---------------------
+//private BroadcastReceiver mBroadcastReceiver6 = new BroadcastReceiver() {
+//    @Override
+//    public void onReceive(Context context, Intent intent) {
+//
+//        if(intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(TelephonyManager.EXTRA_STATE_RINGING)){
+//
+//            String incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
+//            //Toast.makeText(context,"Call from: " + incomingNumber,Toast.LENGTH_LONG).show();
+//            //Log.d(TAG, "willem1");
+//            // bytes="r".getBytes(defaultCharset());
+//            mBluetoothConnection.write("r".getBytes(defaultCharset()));
+//
+//        }
+//        else if(intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(TelephonyManager.EXTRA_STATE_IDLE) || intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(TelephonyManager.EXTRA_STATE_OFFHOOK)){
+//
+//            //Toast.makeText(context,"Detectes call hangup event",Toast.LENGTH_LONG).show();
+//            //Log.d(TAG, "willem2");
+//        }
+//
+//    }
+//};
 
 }
